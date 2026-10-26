@@ -1,9 +1,27 @@
-# Netlify serves the finished site from site/. No build step: the page is prebuilt.
+# Netlify serves the finished site from site/. No build step: the page is prebuilt by source/build.py.
 [build]
   publish = "site"
   command = ""
 
+# Security headers for every page and file
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Content-Security-Policy = "frame-ancestors 'none'"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+# The brain data and three.js rarely change: let browsers keep them for a week
 [[headers]]
   for = "/data/*"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/vendor/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000, immutable"
