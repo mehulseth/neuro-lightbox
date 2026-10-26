@@ -1,0 +1,9 @@
+# Netlify serves the finished site from site/. No build step: the page is prebuilt.
+[build]
+  publish = "site"
+  command = ""
+
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
