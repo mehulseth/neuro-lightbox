@@ -13,4 +13,4 @@ Anatomy: Colin 27 brain in MNI space with Harvard-Oxford, AAL, JHU, Juelich and 
 - `site/index.html` for the public website: three.js served from `site/vendor/three/`, link-preview tags, and a Content-Security-Policy that only allows this page's own script.
 - `source/artifact.html` for the Claude preview page, which loads three.js from public CDNs.
 
-Hosted on Cloudflare Pages at https://neurolightbox.pages.dev (publish folder `site/`, no build command). Security headers are in `site/_headers`; `netlify.toml` holds the same headers for the old Netlify site.
+Hosted on Cloudflare Workers (static assets, config in `wrangler.jsonc`) at https://neuro-lightbox.mehul17915.workers.dev (serves `site/`; every push to main redeploys). Security headers are in `site/_headers`; `netlify.toml` holds the same headers for the old Netlify site.
