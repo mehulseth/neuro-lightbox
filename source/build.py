@@ -26,8 +26,8 @@ scripts = re.findall(r'<script>(.*?)</script>', site, re.S)
 hashes = ' '.join("'sha256-" + base64.b64encode(hashlib.sha256(x.encode('utf8')).digest()).decode() + "'" for x in scripts)
 URL = 'https://app.neurolightbox.workers.dev'
 DESC = 'Step inside the scanner: interactive 3D walkthroughs of MRI, CT, PET, SPECT, fMRI, EEG, MEG, ultrasound and angiography, real brain scans to read, and a Brain Lab to stimulate the cortex.'
-csp = ("default-src 'self'; script-src 'self' " + hashes + "; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-       "font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; media-src 'self' blob:; "
+csp = ("default-src 'self'; script-src 'self' https://static.cloudflareinsights.com " + hashes + "; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+       "font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://cloudflareinsights.com; media-src 'self' blob:; "
        "worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests")
 head = f"""<meta http-equiv="Content-Security-Policy" content="{csp}">
 <meta name="description" content="{DESC}">
@@ -48,5 +48,8 @@ head = f"""<meta http-equiv="Content-Security-Policy" content="{csp}">
 """
 anchor = '<meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">'
 site = rep(site, anchor, anchor + head)
+# Cloudflare Web Analytics (privacy-friendly page-view counts, no cookies) for app.neurolightbox.workers.dev
+CF_BEACON = '<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon=\'{"token": "2e0609e742f347cf8f8fff2808b8167e"}\'></script>'
+site = rep(site, '</body>', CF_BEACON + '\n</body>')
 open(os.path.join(H, '..', 'site', 'index.html'), 'w', encoding='utf8').write(site)
 print('built', len(src), 'site', len(site), 'scripts hashed', len(scripts))
