@@ -1,0 +1,9 @@
+// Cloudflare Workers config: serves the prebuilt website in site/ as static files.
+// Headers (security + caching) come from site/_headers.
+{
+  "name": "neuro-lightbox",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./site"
+  }
+}
