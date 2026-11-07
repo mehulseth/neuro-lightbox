@@ -259,7 +259,7 @@ function lbFrame(now){
   if (!cv || !cv.isConnected || S.tab !== 'lab' || !lp || lp.hidden) return;
   LB.raf = requestAnimationFrame(lbFrame);
   const w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
-  const r = LB.r, pr = Math.min(window.devicePixelRatio || 1, 2);
+  const r = LB.r, pr = Math.min(window.devicePixelRatio || 1, TOUCH ? 1.5 : 2);
   if (r.getPixelRatio() !== pr) r.setPixelRatio(pr);
   if (cv.width !== Math.round(w*pr) || cv.height !== Math.round(h*pr)) r.setSize(w, h, false);
   const dt = Math.min(0.1, Math.max(0, (now - (LB.lastT || now))/1000)); LB.lastT = now;
